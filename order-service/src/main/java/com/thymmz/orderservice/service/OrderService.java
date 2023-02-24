@@ -3,11 +3,13 @@ package com.thymmz.orderservice.service;
 import com.thymmz.orderservice.dto.InventoryResponse;
 import com.thymmz.orderservice.dto.OrderLineItemsDto;
 import com.thymmz.orderservice.dto.OrderRequest;
+import com.thymmz.orderservice.event.OrderPlacedEvent;
 import com.thymmz.orderservice.model.Order;
 import com.thymmz.orderservice.model.OrderLineItems;
 import com.thymmz.orderservice.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -26,7 +28,10 @@ public class OrderService {
     @Autowired
     private final WebClient.Builder webClientBuilder;
 
-    public void placeOrder(OrderRequest orderRequest){
+    @Autowired
+    private final KafkaTemplate<String, OrderPlacedEvent> kafkaTemplate;
+
+    public String placeOrder(OrderRequest orderRequest){
 
         Order order = new Order();
         order.setOrderNumber(UUID.randomUUID().toString());
@@ -53,6 +58,8 @@ public class OrderService {
 
         if (allProductsInStock){
             orderRepository.save(order);
+            kafkaTemplate.send("notificationTopic", new OrderPlacedEvent(order.getOrderNumber()));
+            return "Placed Order successfully";
         }
         else {
             throw new IllegalArgumentException("Product is not in stock, please try again later");

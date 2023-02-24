@@ -1,6 +1,7 @@
 package com.thymmz.discoveryservice.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -20,6 +21,11 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 public class SecurityConfig {
 
+    @Value("${eureka.username}")
+    private String username;
+    @Value("${eureka.password}")
+    private String password;
+
     @Bean
     public PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
@@ -28,17 +34,12 @@ public class SecurityConfig {
     @Bean
     public UserDetailsService userDetailsService() {
         UserDetails user1 = User.builder()
-                .username("eureka")
-                .password(passwordEncoder().encode("password"))
+                .username(username)
+                .password(passwordEncoder().encode(password))
                 .roles("USER")
                 .build();
-        UserDetails user2 = User.builder()
-                .username("eureka1")
-                .password(passwordEncoder().encode("password"))
-                .roles("ADMIN")
-                .build();
 
-        return new InMemoryUserDetailsManager(user1, user2);
+        return new InMemoryUserDetailsManager(user1);
     }
 
     @Bean
