@@ -1,8 +1,12 @@
+com\thymmz\orderservice\config\WebClientConfig.class
+com\thymmz\orderservice\dto\OrderRequest.class
+com\thymmz\orderservice\repository\OrderRepository.class
+com\thymmz\orderservice\model\OrderLineItems.class
+com\thymmz\orderservice\dto\InventoryResponse.class
 com\thymmz\orderservice\OrderServiceApplication.class
 com\thymmz\orderservice\dto\OrderLineItemsDto.class
-com\thymmz\orderservice\dto\OrderRequest.class
+com\thymmz\orderservice\event\OrderPlacedEvent.class
 com\thymmz\orderservice\model\Order.class
 com\thymmz\orderservice\controller\OrderController.class
-com\thymmz\orderservice\repository\OrderRepository.class
 com\thymmz\orderservice\service\OrderService.class
-com\thymmz\orderservice\model\OrderLineItems.class
+com\thymmz\orderservice\dto\InventoryResponse$InventoryResponseBuilder.class
