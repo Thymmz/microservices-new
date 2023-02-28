@@ -1,7 +1,0 @@
-com\thymmz\inventoryservice\InventoryServiceApplication.class
-com\thymmz\inventoryservice\controller\InventoryController.class
-com\thymmz\inventoryservice\dto\InventoryResponse$InventoryResponseBuilder.class
-com\thymmz\inventoryservice\repository\InventoryRepository.class
-com\thymmz\inventoryservice\model\Inventory.class
-com\thymmz\inventoryservice\service\InventoryService.class
-com\thymmz\inventoryservice\dto\InventoryResponse.class
